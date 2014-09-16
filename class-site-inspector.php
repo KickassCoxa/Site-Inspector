@@ -366,14 +366,20 @@
 			return false;
 		
 		//cleanup domain
-		$this->domain = strtolower( $this->domain );
 		$this->domain = trim( $this->domain );
-		$this->maybe_add_http( );
-		$this->remove_www( );
+		
+		//cleanup domain
+		$this->domain = trim( $this->domain );
+		
+		if ( !strpos($input, '.') !== false && ip2long($ip) !== false ){
+			$this->domain = strtolower( $this->domain );
+			$this->maybe_add_http( );
+			$this->remove_www( );
 
-		//check nonwww
-		$this->nonwww = $this->check_nonwww( );
-		$this->https = $this->check_https( );
+			//check nonwww
+			$this->nonwww = $this->check_nonwww( );
+			$this->https = $this->check_https( );
+		}
 
 		//get DNS
 		$this->get_dns_record( $this->domain );
